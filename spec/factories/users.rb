@@ -8,12 +8,10 @@ FactoryBot.define do
     # sequence(:email) { |n| "TEST#{n}@example.com"}
   end
   
-  # factory :invalid_addresses do
-  #   email {
-  #   "user@example,com",
-  #   "user_at_foo.org",
-  #   "user.name@example.",
-  #   "foo@bar_baz.com",
-  #   "foo@bar+baz.com"
-  #   }
+  factory :invalid_user do
+    name  { "" }
+    email { "user@invalid" }
+    password { "foo" }
+    password_confirmation { "bar" }
+  end
 end
