@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# ruby 2.6.3
+
 gem 'rails'
 gem 'bcrypt'
 gem 'bootstrap-sass', '3.3.7'
@@ -21,6 +23,7 @@ group :development do
   gem 'listen'
   gem 'spring'
   gem 'spring-watcher-listen'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
@@ -28,6 +31,8 @@ group :test do
   gem 'minitest'
   gem 'minitest-reporters'
   gem 'guard-minitest'
+  gem 'public_suffix'
+  gem 'capybara'
 end
 
 group :production do
