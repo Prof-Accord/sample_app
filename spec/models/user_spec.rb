@@ -71,5 +71,9 @@ RSpec.describe User, type: :model do
       @user.password = @user.password_confirmation = "a" * 5
       assert @user.invalid?
     end
+    
+    it "ダイジェストが存在しない時にauthenticated?がnilを返すこと" do
+      assert @user.authenticated?('') == false
+    end
   end
 end
