@@ -16,6 +16,7 @@ gem 'jbuilder'
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug',  '9.0.6', platform: :mri
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -33,6 +34,9 @@ group :test do
   gem 'guard-minitest'
   gem 'public_suffix'
   gem 'capybara'
+  gem "factory_bot_rails"
+  gem "selenium-webdriver"
+  gem 'webdrivers'
 end
 
 group :production do
@@ -40,8 +44,7 @@ group :production do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem "factory_bot_rails"
+
 end
 
 group :development do
