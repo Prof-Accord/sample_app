@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :system do
   before do
-    @user = build(:user)
+    @user = create(:user)
   end
   it "unsuccessful edit" do
     visit edit_user_path(@user)
