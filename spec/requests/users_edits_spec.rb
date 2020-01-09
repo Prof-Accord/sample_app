@@ -10,33 +10,35 @@ RSpec.describe "UsersEdits", type: :request do
     subject { get edit_user_path(@user) }
     include Helpers
     
-    it "unsuccessful edit" do
-      log_in_as(@user)
-      subject
-      expect(response).to have_http_status(200)
-      expect(subject).to render_template('users/edit')
-      patch user_path(@user), params: { user: { name: "",
-                                                email: "foo@invalid",
-                                                password:              "foo",
-                                                password_confirmation: "bar" } }
-      expect(subject).to render_template('users/edit')
-      assert_select 'div.alert', count: 1
-    end
-    it "successful edit" do
-      subject
-      log_in_as(@user)
-      expect(response).to redirect_to edit_user_url(@user)
-      name = "Foo Bar"
-      email = "foo@bar.com"
-      patch user_path(@user), params: { user: { name: name,
-                                                email: email,
-                                                password:              "",
-                                                password_confirmation: "" } }
-      expect(flash).not_to be_empty
-      expect(response).to redirect_to @user
-      @user.reload
-      expect(name).to eq(@user.name)
-      expect(email).to eq(@user.email)
+    context "edit" do
+      it "editが失敗する場合" do
+        log_in_as(@user)
+        subject
+        expect(response).to have_http_status(200)
+        expect(subject).to render_template('users/edit')
+        patch user_path(@user), params: { user: { name: "",
+                                                  email: "foo@invalid",
+                                                  password:              "foo",
+                                                  password_confirmation: "bar" } }
+        expect(subject).to render_template('users/edit')
+        assert_select 'div.alert', count: 1
+      end
+      it "editが成功する場合" do
+        subject
+        log_in_as(@user)
+        expect(response).to redirect_to edit_user_url(@user)
+        name = "Foo Bar"
+        email = "foo@bar.com"
+        patch user_path(@user), params: { user: { name: name,
+                                                  email: email,
+                                                  password:              "",
+                                                  password_confirmation: "" } }
+        expect(flash).not_to be_empty
+        expect(response).to redirect_to @user
+        @user.reload
+        expect(name).to eq(@user.name)
+        expect(email).to eq(@user.email)
+      end
     end
     it "should redirect edit when not logged in" do
       subject

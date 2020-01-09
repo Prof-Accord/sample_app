@@ -7,7 +7,7 @@ RSpec.describe "SitieLayouts", type: :request do
   describe "home ページのレイアウト" do
     include Helpers
     before do
-      @user = create(:user)
+      @user = create(:michael)
     end
     it "レイアウトのリンクが正常であること" do
       get root_path

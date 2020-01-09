@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before do
-    @user = build(:user)
+    @user = create(:michael)
   end
   
   describe "バリデーション" do
@@ -73,7 +73,8 @@ RSpec.describe User, type: :model do
     end
     
     it "ダイジェストが存在しない時にauthenticated?がnilを返すこと" do
-      assert @user.authenticated?('') == false
+      # assert @user.authenticated?(:remember, '') == nil?
+      expect(@user.authenticated?(:remember, '')).to eq false
     end
   end
 end

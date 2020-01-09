@@ -12,6 +12,8 @@ FactoryBot.define do
     password { "password" }
     password_confirmation { "password" }
     admin { true }
+    activated { true }
+    activated_at { Time.zone.now }
   end
   
   factory :archer, :class => 'User' do
@@ -20,23 +22,32 @@ FactoryBot.define do
     password { "password" }
     password_confirmation { "password" }
     admin { false }
+    activated { true }
+    activated_at { Time.zone.now }
   end
     
-  #   trait :lana do
-  #     name { "Lana Kane" }
-  #     email { "hands@example.gov" }
-  #   end
+  factory :lana, :class => 'User' do
+    name { "Lana Kane" }
+    email { "hands@example.gov" }
+    password { "password" }
+    password_confirmation { "password" }
+    activated { false }
+    activated_at { Time.zone.now }
+  end
     
-  #   trait :malory do
-  #     name { "Malory Archer" }
-  #     email { "boss@example.gov" }
-  #   end
-  # end
+  factory :malory, :class => 'User' do
+    name { "Malory Archer" }
+    email { "boss@example.gov" }
+    activated { true }
+    activated_at { Time.zone.now }
+  end
   
   factory :other_users, :class => 'User' do
     name
     email
     password { "password" }
     password_confirmation {"password" }
+    activated { true }
+    activated_at { Time.zone.now }
   end
 end

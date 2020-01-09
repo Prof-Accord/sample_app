@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe StaticPagesController, type: :controller do
   render_views
-  
+
   let(:base_title) { 'Ruby on Rails Tutorial Sample App' }
   
   describe "GET #home" do
