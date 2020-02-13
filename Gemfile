@@ -13,6 +13,9 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
 gem 'faker'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'rubocop-faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
@@ -44,10 +47,7 @@ end
 
 group :production do
   gem 'pg'
-end
-
-group :development, :test do
-
+  gem 'fog'
 end
 
 group :development do

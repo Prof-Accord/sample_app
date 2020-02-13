@@ -20,7 +20,7 @@ RSpec.describe "PasswordResets", type: :request do
         params: { password_reset: { email: user.email } }
       expect(user.reset_digest).not_to eq user.reload.reset_digest
       expect(ActionMailer::Base.deliveries.size).to eq 1
-      expect(flash.empty?).to be_falsey
+      expect(flash).not_to be_empty
       expect(response).to redirect_to root_url
     end
     it "再設定フォーム" do

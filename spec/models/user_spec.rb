@@ -76,5 +76,13 @@ RSpec.describe User, type: :model do
       # assert @user.authenticated?(:remember, '') == nil?
       expect(@user.authenticated?(:remember, '')).to eq false
     end
+    
+    it "関連するマイクロポストが削除されること" do
+      @user.save
+      @user.microposts.create!(content: "Lorem ipsum")
+      expect{ 
+        @user.destroy
+      }.to change(Micropost, :count).by(-1)
+    end
   end
 end

@@ -6,9 +6,8 @@ include SessionsHelper
 RSpec.describe "SitieLayouts", type: :request do
   describe "home ページのレイアウト" do
     include Helpers
-    before do
-      @user = create(:michael)
-    end
+    let(:user) { create(:michael) }
+    
     it "レイアウトのリンクが正常であること" do
       get root_path
       expect(response).to have_http_status(200)
@@ -22,10 +21,10 @@ RSpec.describe "SitieLayouts", type: :request do
       assert_select "title", full_title("Contact")
       get signup_path
       assert_select "title", full_title("Sign up")
-      log_in_as(@user, remember_me: '1')
+      log_in_as(user, remember_me: '1')
       get root_path
       assert_select "a[href=?]", users_path, count: 1
-      assert_select "a[href=?]", user_path(current_user), count: 1
+      assert_select "a[href=?]", user_path(current_user), count: 3
       assert_select "a[href=?]", edit_user_path(current_user), count: 1
       assert_select "a[href=?]", logout_path, count: 1
     end
