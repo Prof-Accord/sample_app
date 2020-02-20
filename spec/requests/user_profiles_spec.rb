@@ -23,5 +23,9 @@ RSpec.describe "UserProfiles", type: :request do
         expect(response.body).to match micropost.content
       end
     end
+
+    it "統計情報" do
+      assert_select strong text: ""
+    end
   end
 end
