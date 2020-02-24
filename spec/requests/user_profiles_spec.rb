@@ -4,16 +4,17 @@ RSpec.describe "UserProfiles", type: :request do
   describe "ユーザープロフィール" do
     include ApplicationHelper
     let(:user) { create(:michael, email: "test@test.com") }
+    let!(:users) { create_list(:other_users, 40) }
+    let(:following) { users[1..20] }
+    let(:followers) { users[2..31] }
     before do
-      40.times do 
-        create(:some_microposts, user: user)
-      end
+      40.times{ create(:some_microposts, user: user) }
+      following.each { |followed| user.follow(followed) }
+      followers.each { |follower| follower.follow(user) }
     end
     
     it "プロフィール画面" do
       get user_path(user)
-      expect(response).to have_http_status(200)
-      expect(response).to render_template 'users/show'
       assert_select 'title', full_title(user.name)
       assert_select 'h1', text: user.name
       assert_select 'h1>img.gravatar'
@@ -25,7 +26,9 @@ RSpec.describe "UserProfiles", type: :request do
     end
 
     it "統計情報" do
-      assert_select strong text: ""
+      get user_path(user)
+      assert_select "strong#following", text: "20"
+      assert_select "strong#followers", text: "30"
     end
   end
 end

@@ -11,10 +11,19 @@ RSpec.describe "UsersController", type: :request do
       expect(response).to have_http_status 200
     end
     
-    describe "deleteアクションのテスト" do
-      it "ログインしていないとき、deleteでログイン画面にリダイレクトされること" do
+  describe "#delete" do
+    context "ログインしていないとき"
+      it "deleteでログイン画面にリダイレクトされること" do
         delete user_path(user), params: { id: user.id }
         expect(response).to redirect_to login_path
+      end
+      it "followingからログイン画面にリダイレクトされること" do
+        get following_user_path(user)
+        expect(response).to redirect_to login_url
+      end
+      it "followersからログイン画面にリダイレクトされること" do
+        get followers_user_path(user)
+        expect(response).to redirect_to login_url
       end
     end
   end
