@@ -39,6 +39,8 @@ FactoryBot.define do
   factory :malory, class: User do
     name { "Malory Archer" }
     email { "boss@example.gov" }
+    password { "password" }
+    password_confirmation { "password" }
     activated { true }
     activated_at { Time.zone.now }
   end
