@@ -28,6 +28,7 @@ RSpec.describe "FollowingTest", type: :request do
       end
     end
   end
+  
   describe "Followersページ" do
     before do
       get followers_user_path(user_a)
