@@ -18,7 +18,8 @@ RSpec.describe "Relationships", type: :request do
 
     it "deleteアクションはログインしているユーザーが必要なこと" do
       expect {
-        delete relationship_path(id: user_a.id, followed_id: user_b.id)
+        delete relationship_
+        path(id: user_a.id, followed_id: user_b.id)
     }.to change { Relationship.count }.by(0)
     end
   end
