@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:michael) }
+  let(:archer) { create(:archer) }
+  let(:lana) { create(:lana) }
 
   describe "バリデーション" do
     it "userが有効であること" do
@@ -72,29 +74,50 @@ RSpec.describe User, type: :model do
     end
 
     describe "#follow / #unfollow" do
-      let(:other_user) { create(:archer) }
-      subject { user.following?(other_user) }
+      let(:archer) { create(:archer) }
+      subject { user.following?(archer) }
       
       context "フォローしていない場合" do
         it "falseを返すこと" do
           is_expected.to be_falsey
         end
         it "フォローが成功すること" do
-          user.follow(other_user)
+          user.follow(archer)
           is_expected.to be_truthy
         end
       end
 
       context "フォローしている場合" do
         before do
-          user.follow(other_user)
+          user.follow(archer)
         end
         it "アンフォローが成功すること" do
-          user.unfollow(other_user)
+          user.unfollow(archer)
           is_expected.to be_falsey
         end
         it "フォロワーに追加されていること" do
-          expect(other_user.followers).to include user
+          expect(archer.followers).to include user
+        end
+      end
+    end
+    
+    describe "フィードとポスト" do
+      before do
+        user.follow(lana)
+      end
+      it "フォローしているユーザーの投稿を確認" do
+        lana.microposts.each do |post_following|
+          expect(user.feed).to include post_following
+        end
+      end
+      it "自分自身の投稿を確認" do
+        user.microposts.each do |post_self|
+          expect(user.feed).to include post_self
+        end
+      end
+      it "フォローしていないユーザーの投稿を確認" do
+        archer.microposts.each do |post_unfollowing|
+          expect(user.feed).not_to include post_following
         end
       end
     end

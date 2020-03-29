@@ -17,7 +17,6 @@ RSpec.describe "FollowingTest", type: :request do
     before do
       get following_user_path(user_a)
     end
-
     it "followingページ" do
       expect(response.body).to match user_a.following.count.to_s
     end
@@ -33,7 +32,6 @@ RSpec.describe "FollowingTest", type: :request do
     before do
       get followers_user_path(user_a)
     end
-
     it "follwersページ" do
       expect(response.body).to match user_a.followers.count.to_s
     end
@@ -42,6 +40,33 @@ RSpec.describe "FollowingTest", type: :request do
       user_a.followers.each do |user|
         assert_select "a[href=?]", user_path(user)
       end
+    end
+  end
+
+  describe "[Follow] / [Unfollow]ボタン" do
+    it "標準的なフォロー" do
+      expect {
+        post relationships_path, params: { followed_id: user_b.id }
+    }.to change { user_a.following.count }.by(1)
+    end
+    it "Ajaxを使ったフォロー" do
+      expect {
+        post relationships_path, xhr: true, params: { followed_id: user_b.id }
+    }.to change { user_a.following.count }.by(1)
+    end
+    it "標準的なアンフォロー" do
+      user_a.follow(user_b)
+      relationship = user_a.active_relationships.find_by(followed_id: user_b.id)
+      expect {
+        delete relationship_path(relationship)
+    }.to change { user_a.following.count }.by(-1)
+    end
+    it "should unfollow a user with Ajax" do
+      user_a.follow(user_b)
+      relationship = user_a.active_relationships.find_by(followed_id: user_b.id)
+      expect {
+        delete relationship_path(relationship), xhr: true
+      }.to change { user_a.following.count }.by(-1)
     end
   end
 end
